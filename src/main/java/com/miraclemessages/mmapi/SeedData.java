@@ -1,8 +1,6 @@
 package com.miraclemessages.mmapi;
 
-import com.miraclemessages.mmapi.models.Role;
-import com.miraclemessages.mmapi.models.User;
-import com.miraclemessages.mmapi.models.UserRoles;
+import com.miraclemessages.mmapi.models.*;
 import com.miraclemessages.mmapi.services.RoleService;
 import com.miraclemessages.mmapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,9 @@ public class SeedData implements CommandLineRunner
     @Autowired
     UserService userService;
 
+    //@Autowired
+    //VolunteerService volunteerService;
+
 
     @Override
     public void run(String[] args) throws Exception
@@ -34,26 +35,29 @@ public class SeedData implements CommandLineRunner
         roleService.save(r2);
         roleService.save(r3);
 
-        // admin, data, user
+
+
+//        // admin, data, user
         ArrayList<UserRoles> admins = new ArrayList<>();
         admins.add(new UserRoles(new User(), r1));
         admins.add(new UserRoles(new User(), r2));
         admins.add(new UserRoles(new User(), r3));
-        User u1 = new User("admin", "adminpass", admins);
-        userService.save(u1);
-
-        // data, user
-        ArrayList<UserRoles> datas = new ArrayList<>();
-        datas.add(new UserRoles(new User(), r3));
-        datas.add(new UserRoles(new User(), r2));
-        User u2 = new User("data", "datapass", datas);
-        userService.save(u2);
+//        User u1 = new User("admin", "adminpass", admins);
+//        userService.save(u1);
+//
+//        // data, user
+//        ArrayList<UserRoles> datas = new ArrayList<>();
+//        datas.add(new UserRoles(new User(), r3));
+//        datas.add(new UserRoles(new User(), r2));
+//        User u2 = new User("data", "datapass", datas);
+//        userService.save(u2);
 
         // user
         ArrayList<UserRoles> users = new ArrayList<>();
         users.add(new UserRoles(new User(), r2));
-        User u3 = new User("barnbarn", "ILuvM4th!", users);
+        User u3 = new User("barnbarn", "ILuvM4th!", "Barn@bmail.com", "Barn", "Barn", 1234567899, "McTown", "Texas", "", "", "78504", "5050 N. 15th", 5, admins);
         userService.save(u3);
+
 
     }
 }

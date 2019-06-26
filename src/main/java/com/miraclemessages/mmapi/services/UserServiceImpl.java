@@ -78,6 +78,18 @@ public class UserServiceImpl implements UserDetailsService, UserService
         }
         newUser.setUserRoles(newRoles);
 
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setEmail(user.getEmail());
+        newUser.setPhoneNumber(user.getPhoneNumber());
+        newUser.setAddress(user.getAddress());
+        newUser.setState(user.getState());
+        newUser.setCity(user.getCity());
+        newUser.setComment(user.getComment());
+        newUser.setZip(user.getZip());
+        newUser.setTimeZone(user.getTimeZone());
+        newUser.setInterestedIn(user.getInterestedIn());
+
         return userrepos.save(newUser);
     }
 
@@ -102,6 +114,8 @@ public class UserServiceImpl implements UserDetailsService, UserService
                 {
                     currentUser.setPasswordNoEncrypt(user.getPassword());
                 }
+
+                //if (user.ge)
 
                 if (user.getUserRoles().size() > 0)
                 {
