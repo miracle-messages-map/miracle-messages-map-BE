@@ -5,6 +5,7 @@ import com.miraclemessages.mmapi.models.UserRoles;
 import com.miraclemessages.mmapi.repository.RoleRepository;
 import com.miraclemessages.mmapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,10 +45,11 @@ public class UserServiceImpl implements UserDetailsService, UserService
         return userrepos.findById(id).orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
     }
 
-    public List<User> findAll()
+    @Override
+    public List<User> findAll(Pageable pageable)
     {
         List<User> list = new ArrayList<>();
-        userrepos.findAll().iterator().forEachRemaining(list::add);
+        userrepos.findAll(pageable).iterator().forEachRemaining(list::add);
         return list;
     }
 
@@ -87,7 +89,6 @@ public class UserServiceImpl implements UserDetailsService, UserService
         newUser.setCity(user.getCity());
         newUser.setComment(user.getComment());
         newUser.setZip(user.getZip());
-        newUser.setTimeZone(user.getTimeZone());
         newUser.setInterestedIn(user.getInterestedIn());
 
         return userrepos.save(newUser);

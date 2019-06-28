@@ -37,7 +37,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
                 "/createnewuser"
                 )
                 .permitAll()
-                .antMatchers("/books", "/authors").authenticated()
+                .antMatchers("/users").authenticated()
                 .antMatchers("/data/**").hasAnyRole("DATA")
                 .antMatchers("/roles","/**").hasAnyRole("ADMIN")
                 .and()

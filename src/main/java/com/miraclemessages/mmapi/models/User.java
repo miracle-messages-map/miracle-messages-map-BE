@@ -36,44 +36,43 @@ public class User extends Auditable
     private String email;
 
     //First/Last name
-    @Column(nullable = false)
+    @Column
     private String firstName;
 
-    @Column(nullable = false)
+    @Column
     private String lastName;
 
     //Phone
-    @Column(unique = true)
-    private int phoneNumber;
+    @Column
+    private String phoneNumber;
 
     //City
-    @Column(nullable = false)
+    @Column
     private String city;
 
     //State Province
-    @Column(nullable = false)
+    @Column
     private String state;
 
+    //Country
+    @Column
+    private String country;
+
     //Interested In
-    @Column(nullable = false)
+    @Column
     private String interestedIn;
 
     //Comment
-    @Column(unique = true)
+    @Column
     private String comment;
 
     //Zip/Postal Code
-    @Column(nullable = false)
+    @Column
     private String zip;
 
     //Full Address
-    @Column(nullable = false,
-            unique = true)
+    @Column
     private String address;
-
-    //Time Zone
-    @Column(nullable = false)
-    private int timeZone;
 
     @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL)
@@ -85,7 +84,18 @@ public class User extends Auditable
     {
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, int phoneNumber, String city, String state, String interestedIn, String comment, String zip, String address, int timeZone, List<UserRoles> userRoles)
+    public User(String email, String password, List<UserRoles> userRoles) {
+        this.email = email;
+        setUsername(email);
+        setPassword(password);
+        for (UserRoles ur : userRoles)
+        {
+            ur.setUser(this);
+        }
+        this.userRoles = userRoles;
+    }
+
+    public User(String email, String password, String firstName, String lastName, String phoneNumber, String city, String state, String country, String interestedIn, String comment, String zip, String address, List<UserRoles> userRoles)
     {
         this.email = email;
         this.firstName = firstName;
@@ -93,12 +103,12 @@ public class User extends Auditable
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.state = state;
+        this.country = country;
         this.interestedIn = interestedIn;
         this.comment = comment;
         this.zip = zip;
         this.address = address;
-        this.timeZone = timeZone;
-        setUsername(username);
+        setUsername(email);
         setPassword(password);
         for (UserRoles ur : userRoles)
         {
@@ -177,11 +187,11 @@ public class User extends Auditable
         this.lastName = lastName;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -233,12 +243,12 @@ public class User extends Auditable
         this.address = address;
     }
 
-    public int getTimeZone() {
-        return timeZone;
+    public String getCountry() {
+        return country;
     }
 
-    public void setTimeZone(int timeZone) {
-        this.timeZone = timeZone;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public List<SimpleGrantedAuthority> getAuthority()
